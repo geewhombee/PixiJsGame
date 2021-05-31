@@ -8,20 +8,78 @@
     <script src="js/pixi.min.js"></script>
     <script>
         let app;
+        let keys = {};
+        let keysDiv;
         window.onload = function() {
             app = new PIXI.Application(
                 {
-                    width: 800,
-                    height: 600,
+                    width: 1800,
+                    height: 800,
                     backgroundColor: 0xAAAAAA
                 }
             );
 
             document.body.appendChild(app.view);
+
+            const player = PIXI.Sprite.from('img/player.png');
+
+            player.anchor.set(0.5);
+
+            player.x = app.screen.width / 2;
+            player.y = app.screen.height / 1.2;
+
+            
+
+            app.ticker.add((delta) => {
+                player.rotation += 0.05 * delta;
+            });
+
+            app.stage.addChild(player);
+
+            window.addEventListener("keydown", keysDown);
+            window.addEventListener("keyup", keysUp);
+
+            app.ticker.add(gameLoop);
+
+            keysDiv = document.querySelector("#keys");
+
+            function keysDown(e) {                
+                keys[e.keyCode] = true;
+            }
+            
+            function keysUp(e) {                
+                keys[e.keyCode] = false;
+            }
+
+            function gameLoop() {
+                keysDiv.innerHTML = JSON.stringify(keys);
+
+                //W
+                if (keys["87"]) {
+                    player.y += -5;
+                    console.log(player.y + " : " + player.x);
+                }
+                //S
+                if (keys["83"]) {
+                    player.y += 5;
+                    console.log(player.y + " : " + player.x);
+                }
+                //A
+                if (keys["65"]) {
+                    player.x += -5;
+                    console.log(player.y + " : " + player.x);
+                }
+                //D
+                if (keys["68"]) {
+                    player.x += 5;
+                    console.log(player.y + " : " + player.x);
+                }
+            }
+
         }
     </script>
 </head>
 <body>
-    
+    <div id="keys"></div>
 </body>
 </html>
