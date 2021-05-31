@@ -8,12 +8,13 @@
     <script src="js/pixi.min.js"></script>
     <script>
         let app;
+        let player;
         let keys = {};
         let keysDiv;
         window.onload = function() {
             app = new PIXI.Application(
-                {
-                    width: 1800,
+                {                    
+                    width: 900,
                     height: 800,
                     backgroundColor: 0xAAAAAA
                 }
@@ -21,18 +22,18 @@
 
             document.body.appendChild(app.view);
 
-            const player = PIXI.Sprite.from('img/player.png');
+            player = PIXI.Sprite.from('img/player.png');
 
             player.anchor.set(0.5);
 
             player.x = app.screen.width / 2;
             player.y = app.screen.height / 1.2;
+            player.height = 20;
+            player.width = 20;
 
             
 
-            app.ticker.add((delta) => {
-                player.rotation += 0.05 * delta;
-            });
+            
 
             app.stage.addChild(player);
 
@@ -77,6 +78,7 @@
             }
 
         }
+        
     </script>
 </head>
 <body>
